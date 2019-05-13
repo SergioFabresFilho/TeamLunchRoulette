@@ -1,6 +1,8 @@
 package br.com.sergio.teste.d3.teamlunchroulette.service.impl;
 
+import br.com.sergio.teste.d3.teamlunchroulette.io.entity.TeamEntity;
 import br.com.sergio.teste.d3.teamlunchroulette.io.entity.UserEntity;
+import br.com.sergio.teste.d3.teamlunchroulette.io.repository.TeamRepository;
 import br.com.sergio.teste.d3.teamlunchroulette.io.repository.UserRepository;
 import br.com.sergio.teste.d3.teamlunchroulette.service.UserService;
 import br.com.sergio.teste.d3.teamlunchroulette.shared.Utils;
@@ -14,12 +16,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    TeamRepository teamRepository;
 
     @Autowired
     Utils utils;

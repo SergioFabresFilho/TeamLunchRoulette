@@ -3,6 +3,8 @@ package br.com.sergio.teste.d3.teamlunchroulette.service;
 import br.com.sergio.teste.d3.teamlunchroulette.shared.dto.UserDTO;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.util.List;
+
 public interface UserService extends UserDetailsService {
     UserDTO createUser(UserDTO userDTO);
     UserDTO getUserByEmail(String username);

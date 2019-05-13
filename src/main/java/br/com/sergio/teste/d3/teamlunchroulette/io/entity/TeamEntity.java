@@ -1,29 +1,26 @@
 package br.com.sergio.teste.d3.teamlunchroulette.io.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
-@Entity(name = "user")
-public class UserEntity implements Serializable {
+@Entity(name = "team")
+public class TeamEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonIgnore
     private Long id;
 
     @Column(nullable = false, unique = true, length = 50)
     private String publicId;
 
     @Column(nullable = false, unique = true)
-    private String email;
+    private String name;
 
-    @Column(nullable = false)
-    @JsonIgnore
-    private String encryptedPassword;
+    @OneToMany
+    private List<UserEntity> members;
 
     public Long getId() {
         return id;
@@ -41,19 +38,19 @@ public class UserEntity implements Serializable {
         this.publicId = publicId;
     }
 
-    public String getEmail() {
-        return email;
+    public String getName() {
+        return name;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getEncryptedPassword() {
-        return encryptedPassword;
+    public List<UserEntity> getMembers() {
+        return members;
     }
 
-    public void setEncryptedPassword(String encryptedPassword) {
-        this.encryptedPassword = encryptedPassword;
+    public void setMembers(List<UserEntity> members) {
+        this.members = members;
     }
 }

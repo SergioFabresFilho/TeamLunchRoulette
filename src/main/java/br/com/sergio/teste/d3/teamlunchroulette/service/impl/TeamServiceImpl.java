@@ -81,6 +81,7 @@ public class TeamServiceImpl implements TeamService {
     public TeamDTO addRestaurant(RestaurantDTO restaurantDTO, String teamId) {
         TeamEntity teamEntity = teamRepository.findByPublicId(teamId);
         RestaurantEntity restaurantEntity = new RestaurantEntity();
+        restaurantEntity.setPublicId(utils.generatePublicId(50));
 
         BeanUtils.copyProperties(restaurantDTO, restaurantEntity);
         RestaurantEntity storedRestaurant = restaurantRepository.save(restaurantEntity);

@@ -1,7 +1,9 @@
 package br.com.sergio.teste.d3.teamlunchroulette.shared;
 
-import br.com.sergio.teste.d3.teamlunchroulette.io.entity.UserEntity;
+import br.com.sergio.teste.d3.teamlunchroulette.io.entity.RestaurantEntity;
 import br.com.sergio.teste.d3.teamlunchroulette.service.UserService;
+import br.com.sergio.teste.d3.teamlunchroulette.shared.dto.RestaurantDTO;
+import br.com.sergio.teste.d3.teamlunchroulette.shared.dto.TeamDTO;
 import br.com.sergio.teste.d3.teamlunchroulette.shared.dto.UserDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.SecureRandom;
+import java.util.List;
 import java.util.Random;
 
 @Component
@@ -41,7 +44,16 @@ public class Utils {
             email = principal.toString();
         }
 
-        UserDTO userDTO = userService.getUserByEmail(email);
-        return userDTO;
+        return userService.getUserByEmail(email);
+    }
+
+    public RestaurantDTO getRandomRestaurant(TeamDTO teamDTO) {
+        List<RestaurantEntity> restaurants = teamDTO.getRestaurants();
+        RestaurantEntity restaurantEntity = restaurants.get(RANDOM.nextInt(restaurants.size()));
+
+        RestaurantDTO returnValue = new RestaurantDTO();
+        BeanUtils.copyProperties(restaurantEntity, returnValue);
+
+        return returnValue;
     }
 }

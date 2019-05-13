@@ -1,29 +1,25 @@
 package br.com.sergio.teste.d3.teamlunchroulette.io.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
-@Entity(name = "team")
-public class TeamEntity implements Serializable {
+@Entity(name = "restaurant")
+public class RestaurantEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonIgnore
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(unique = true, length = 50)
     private String publicId;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String name;
-
-    @OneToMany
-    private List<UserEntity> members;
-
-    @OneToMany
-    private List<RestaurantEntity> restaurants;
 
     public Long getId() {
         return id;
@@ -47,21 +43,5 @@ public class TeamEntity implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<UserEntity> getMembers() {
-        return members;
-    }
-
-    public void setMembers(List<UserEntity> members) {
-        this.members = members;
-    }
-
-    public List<RestaurantEntity> getRestaurants() {
-        return restaurants;
-    }
-
-    public void setRestaurants(List<RestaurantEntity> restaurants) {
-        this.restaurants = restaurants;
     }
 }

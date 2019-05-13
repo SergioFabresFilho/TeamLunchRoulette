@@ -1,5 +1,6 @@
 package br.com.sergio.teste.d3.teamlunchroulette.shared.dto;
 
+import br.com.sergio.teste.d3.teamlunchroulette.io.entity.RestaurantEntity;
 import br.com.sergio.teste.d3.teamlunchroulette.io.entity.UserEntity;
 
 import java.io.Serializable;
@@ -13,6 +14,7 @@ public class TeamDTO implements Serializable {
     private String publicId;
     private String name;
     private List<UserEntity> members;
+    private List<RestaurantEntity> restaurants;
 
     public Long getId() {
         return id;
@@ -44,5 +46,13 @@ public class TeamDTO implements Serializable {
 
     public void setMembers(List<UserEntity> members) {
         this.members = members;
+    }
+
+    public List<RestaurantEntity> getRestaurants() {
+        return restaurants;
+    }
+
+    public void setRestaurants(List<RestaurantEntity> restaurants) {
+        this.restaurants = restaurants;
     }
 }

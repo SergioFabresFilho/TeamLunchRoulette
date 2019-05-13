@@ -1,10 +1,13 @@
 package br.com.sergio.teste.d3.teamlunchroulette.service.impl;
 
+import br.com.sergio.teste.d3.teamlunchroulette.io.entity.RestaurantEntity;
 import br.com.sergio.teste.d3.teamlunchroulette.io.entity.TeamEntity;
 import br.com.sergio.teste.d3.teamlunchroulette.io.entity.UserEntity;
+import br.com.sergio.teste.d3.teamlunchroulette.io.repository.RestaurantRepository;
 import br.com.sergio.teste.d3.teamlunchroulette.io.repository.TeamRepository;
 import br.com.sergio.teste.d3.teamlunchroulette.service.TeamService;
 import br.com.sergio.teste.d3.teamlunchroulette.shared.Utils;
+import br.com.sergio.teste.d3.teamlunchroulette.shared.dto.RestaurantDTO;
 import br.com.sergio.teste.d3.teamlunchroulette.shared.dto.TeamDTO;
 import br.com.sergio.teste.d3.teamlunchroulette.shared.dto.UserDTO;
 import org.springframework.beans.BeanUtils;
@@ -18,6 +21,9 @@ public class TeamServiceImpl implements TeamService {
 
     @Autowired
     TeamRepository teamRepository;
+
+    @Autowired
+    RestaurantRepository restaurantRepository;
 
     @Autowired
     Utils utils;
@@ -63,8 +69,29 @@ public class TeamServiceImpl implements TeamService {
         members.add(userEntity);
         teamEntity.setMembers(members);
 
+        TeamEntity storedTeam = teamRepository.save(teamEntity);
+
         TeamDTO returnValue = new TeamDTO();
-        BeanUtils.copyProperties(teamEntity, returnValue);
+        BeanUtils.copyProperties(storedTeam, returnValue);
+
+        return returnValue;
+    }
+
+    @Override
+    public TeamDTO addRestaurant(RestaurantDTO restaurantDTO, String teamId) {
+        TeamEntity teamEntity = teamRepository.findByPublicId(teamId);
+        RestaurantEntity restaurantEntity = new RestaurantEntity();
+
+        BeanUtils.copyProperties(restaurantDTO, restaurantEntity);
+        RestaurantEntity storedRestaurant = restaurantRepository.save(restaurantEntity);
+
+        List<RestaurantEntity> restaurants = teamEntity.getRestaurants();
+        restaurants.add(storedRestaurant);
+        teamEntity.setRestaurants(restaurants);
+        TeamEntity storedTeam = teamRepository.save(teamEntity);
+
+        TeamDTO returnValue = new TeamDTO();
+        BeanUtils.copyProperties(storedTeam, returnValue);
 
         return returnValue;
     }
